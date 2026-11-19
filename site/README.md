@@ -37,6 +37,20 @@ Then open http://localhost:8080.
 | Domain | Replace `DOMAIN` in `robots.txt` and `sitemap.xml`; make `og:image` URLs absolute |
 | Privacy notice approval | `privacy.html`: standard POPIA wording, Pro-Lec to confirm |
 
+## Deployment
+
+Workflow: `.github/workflows/pages.yml`.
+
+- **Preview:** every push to `main` that changes `site/` publishes to https://duplessisetienne.github.io/prolec/ (marked noindex). Share this link with Pro-Lec for review.
+- **Live (HostAfrica):** only when run by hand, after Pro-Lec approves: Actions > Deploy site > Run workflow > tick "Also publish to the live site".
+
+One-time setup for live deploys:
+
+1. Pro-Lec opens the HostAfrica hosting account and domain in their name.
+2. In cPanel, create an FTP account limited to `public_html` (or use the main one).
+3. In GitHub: Settings > Secrets and variables > Actions > New repository secret. Add `FTP_SERVER` (e.g. `ftp.prolec.co.za`), `FTP_USERNAME`, `FTP_PASSWORD`, and optionally `FTP_DIR` (default `public_html/`; with a limited FTP account use `./`).
+4. Enable SSL in cPanel (AutoSSL / Let's Encrypt).
+
 ## Launch checklist
 
 - [ ] All placeholders above replaced (`grep -rn "PROLEC_FACEBOOK_PAGE\|YOUR_FORM_ID\|DOMAIN\|class=\"ph" site`)

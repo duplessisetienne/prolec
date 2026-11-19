@@ -1,12 +1,21 @@
-# Publishes the site/ folder to GitHub Pages on every push to main.
+# preview -> GitHub Pages (https://duplessisetienne.github.io/prolec/) on every push to main
+# live    -> HostAfrica over FTP, only when run by hand:
+#            Actions > Deploy site > Run workflow > tick "Also publish to the live site"
 # Requires Settings > Pages > Source = "GitHub Actions".
-name: Deploy site to GitHub Pages
+# Live deploy secrets (Settings > Secrets and variables > Actions):
+#   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD, and optionally FTP_DIR (default public_html/)
+name: Deploy site
 
 on:
   push:
     branches: [main]
     paths: ["site/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
+    inputs:
+      go_live:
+        description: "Also publish to the live site (HostAfrica)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -14,11 +23,12 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: deploy
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  preview:
+    name: Preview (GitHub Pages)
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -26,8 +36,43 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Keep the preview out of search engines
+        run: |
+          cp -r site _preview
+          sed -i 's|<head>|<head>\n  <meta name="robots" content="noindex, nofollow">|' _preview/*.html
+          printf 'User-agent: *\nDisallow: /\n' > _preview/robots.txt
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: _preview
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  live:
+    name: Live (HostAfrica FTP)
+    runs-on: ubuntu-latest
+    needs: preview
+    if: github.event_name == 'workflow_dispatch' && inputs.go_live
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+    steps:
+      - name: Stop if HostAfrica FTP secrets are missing
+        if: env.FTP_SERVER == ''
+        run: |
+          echo "::error::FTP_SERVER secret not set; add the HostAfrica FTP secrets first."
+          exit 1
+      - uses: actions/checkout@v4
+        if: env.FTP_SERVER != ''
+      - name: Upload site to HostAfrica
+        if: env.FTP_SERVER != ''
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./site/
+          server-dir: ${{ secrets.FTP_DIR || 'public_html/' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            README.md
