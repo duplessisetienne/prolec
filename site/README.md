@@ -13,6 +13,8 @@ site/
 
 Header and footer are repeated in every page. Change them in all six files.
 
+After changing `style.css` or `main.js`, bump the `?v=` number on their links in all six pages so browsers fetch the new file instead of a cached copy.
+
 ## Preview locally
 
 ```bash
