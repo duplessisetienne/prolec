@@ -355,3 +355,17 @@ h1, h2, h3, .display-title {
 .prose h2 { font-size: 1.3rem; margin-top: 2rem; color: #fff; }
 
 :focus-visible { outline: 3px solid #ffb4b6; outline-offset: 2px; }
+
+.site-footer a { overflow-wrap: anywhere; }
+
+/* Phones: keep decorative stripes clear of the text */
+@media (max-width: 575.98px) {
+  .hero { padding: 4rem 0 3.5rem; }
+  .hero::before { width: 34px; right: -10px; opacity: .6; }
+  .hero::after  { width: 10px; right: 40px; opacity: .35; }
+  .hero-tag { letter-spacing: .08em; gap: .5rem; }
+  .hero-tag::before, .hero-tag::after { width: 18px; }
+  .page-banner::after { width: 90px; right: -50px; }
+  .service-row { --bs-gutter-y: 1.25rem; padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+  .site-footer a { overflow-wrap: normal; }
+}
