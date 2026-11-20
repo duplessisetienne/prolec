@@ -33,7 +33,6 @@ Then open http://localhost:8080.
 | Service photos, project photos | Replace each `<div class="ph">` with `<img class="card-img" src="..." alt="..." loading="lazy">` |
 | Project titles, locations, descriptions | `projects.html` (see the comment above the grid) and the 4 recent projects on `index.html` |
 | About Us text, service areas, service lists | `about.html`, `services.html` (marked `CONTENT:`) |
-| WhatsApp number | Currently `27638048504` (Operations 063 804 8504). Search and replace `wa.me/27638048504` if different |
 | Facebook page name | Replace `PROLEC_FACEBOOK_PAGE` (Facebook and Messenger links) |
 | Enquiry recipient email | Create a free Formspree form sent to that address; replace `YOUR_FORM_ID` in `contact.html` |
 | Domain | Replace `DOMAIN` in `robots.txt` and `sitemap.xml`; make `og:image` URLs absolute |

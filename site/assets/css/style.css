@@ -373,3 +373,16 @@ h1, h2, h3, .display-title {
   .service-row { --bs-gutter-y: 1.25rem; padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
   .site-footer a { overflow-wrap: normal; }
 }
+
+.service-anchor { scroll-margin-top: 100px; }
+
+/* Phones and small tablets: client's red-glow background behind the hero */
+@media (max-width: 767.98px) {
+  .hero {
+    background:
+      linear-gradient(180deg, rgba(13,13,15,.25) 0%, rgba(13,13,15,.55) 60%, rgba(13,13,15,.85) 100%),
+      url("../img/hero-mobile.jpg") center top / cover no-repeat,
+      var(--pl-black);
+  }
+  .hero::before, .hero::after { display: none; }
+}
