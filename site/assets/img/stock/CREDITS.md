@@ -1,10 +1,9 @@
 # Stock photo credits
 
-Temporary placeholder photos until Pro-Lec supplies its own. All are CC0 1.0 (public domain dedication): free for commercial use, no attribution required. Found via Openverse (openverse.org). `hero.jpg` is also used, cropped, as `../og-image.jpg`.
+Temporary placeholder photos until Pro-Lec supplies its own. All are CC0 1.0 (public domain dedication): free for commercial use, no attribution required. Found via Openverse (openverse.org).
 
 | File | Title | Creator | Source | Licence |
 |---|---|---|---|---|
-| `hero.jpg` | [Builders construction site](https://www.rawpixel.com/image/6039214/photo-image-public-domain-house-technology) | - | rawpixel | CC0 |
 | `about-team.jpg` | [Fire Rescue Station 7 construction](https://www.rawpixel.com/image/9657888/image-people-public-domain-construction) | - | rawpixel | CC0 |
 | `home-about.jpg` | [Fire Rescue Station 7 construction](https://www.rawpixel.com/image/9657889/image-people-public-domain-construction) | - | rawpixel | CC0 |
 | `svc-electrical.jpg` | [Electrician Electricity](https://stocksnap.io/photo/electrician-electricity-QJ55PI34SY) | Michal Jarmoluk | StockSnap | CC0 |
