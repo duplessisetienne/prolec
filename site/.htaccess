@@ -1,0 +1,28 @@
+# HostAfrica (Apache) settings for prolec.co.za. Ignored by GitHub Pages.
+# Needs SSL active in cPanel (AutoSSL / Let's Encrypt) before go-live,
+# otherwise the HTTPS redirect below will make the site unreachable.
+
+RewriteEngine On
+
+# One address for search engines: https://prolec.co.za (no www, always HTTPS)
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# /index.html -> /  (the home page's canonical address)
+RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+
+# Cache images for a month; CSS/JS are versioned with ?v= so they can be cached too
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/xml application/xml
+</IfModule>
